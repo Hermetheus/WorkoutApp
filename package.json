@@ -12,5 +12,8 @@
   "license": "ISC",
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "wml": "0.0.83"
+  }
 }
