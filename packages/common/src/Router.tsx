@@ -2,12 +2,12 @@ import { observer } from "mobx-react-lite";
 import React, { useContext } from "react";
 import { CurrentWorkout } from "./modules/CurrentWorkout";
 import { WorkoutHistory } from "./modules/WorkoutHistories";
-import { RouterStoreContext } from "./stores/RouterStore";
+import { RootStoreContext } from "./stores/rootStore";
 
 export const Router = observer(() => {
-  const routerStore = useContext(RouterStoreContext);
+  const rootStore = useContext(RootStoreContext);
 
-  return routerStore.screen === "WorkoutHistory" ? (
+  return rootStore.routerStore.screen === "WorkoutHistory" ? (
     <WorkoutHistory />
   ) : (
     <CurrentWorkout />

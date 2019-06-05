@@ -11,8 +11,8 @@ var mobx_react_lite_1 = require("mobx-react-lite");
 var react_1 = __importStar(require("react"));
 var CurrentWorkout_1 = require("./modules/CurrentWorkout");
 var WorkoutHistories_1 = require("./modules/WorkoutHistories");
-var RouterStore_1 = require("./stores/RouterStore");
+var rootStore_1 = require("./stores/rootStore");
 exports.Router = mobx_react_lite_1.observer(function () {
-    var routerStore = react_1.useContext(RouterStore_1.RouterStoreContext);
-    return routerStore.screen === "WorkoutHistory" ? (react_1.default.createElement(WorkoutHistories_1.WorkoutHistory, null)) : (react_1.default.createElement(CurrentWorkout_1.CurrentWorkout, null));
+    var rootStore = react_1.useContext(rootStore_1.RootStoreContext);
+    return rootStore.routerStore.screen === "WorkoutHistory" ? (react_1.default.createElement(WorkoutHistories_1.WorkoutHistory, null)) : (react_1.default.createElement(CurrentWorkout_1.CurrentWorkout, null));
 });

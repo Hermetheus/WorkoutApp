@@ -29,16 +29,27 @@ var styles = react_native_1.StyleSheet.create({
     },
     bottomRow: {
         flexDirection: "row",
-        justifyContent: "space-evenly",
+        justifyContent: "space-between",
         marginTop: 14
     },
     circle: {
-        borderRadius: 100,
+        borderRadius: 25,
         backgroundColor: "#8FB299",
-        padding: 15
+        height: 50,
+        width: 50
+    },
+    whiteText: {
+        color: "#fff"
     },
     circleText: {
-        color: "#fff"
+        fontSize: 16,
+        margin: "auto"
+    },
+    grayText: {
+        color: "#655252"
+    },
+    fadedBackground: {
+        backgroundColor: "#B2A1A1"
     }
 });
 exports.WorkoutCard = function (_a) {
@@ -49,12 +60,13 @@ exports.WorkoutCard = function (_a) {
             React.createElement(react_native_1.Text, { style: styles.topRowText }, repsAndWeight)),
         React.createElement(react_native_1.View, { style: styles.bottomRow }, sets.map(function (set, index) {
             if (set === "x") {
-                return React.createElement(react_native_1.Text, { key: set + index }, "x");
+                return (React.createElement(react_native_1.View, { style: [styles.circle, styles.fadedBackground], key: set + index },
+                    React.createElement(react_native_1.Text, { style: [styles.grayText, styles.circleText] }, "X")));
             }
             if (set === "") {
-                return React.createElement(react_native_1.Text, { key: set + index });
+                return (React.createElement(react_native_1.View, { style: [styles.circle, styles.fadedBackground], key: set + index }));
             }
             return (React.createElement(react_native_1.View, { style: styles.circle, key: set + index },
-                React.createElement(react_native_1.Text, { style: styles.circleText }, set)));
+                React.createElement(react_native_1.Text, { style: [styles.whiteText, styles.circleText] }, set)));
         }))));
 };

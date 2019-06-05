@@ -27,16 +27,27 @@ const styles = StyleSheet.create({
   },
   bottomRow: {
     flexDirection: "row",
-    justifyContent: "space-evenly",
+    justifyContent: "space-between",
     marginTop: 14
   },
   circle: {
-    borderRadius: 100,
+    borderRadius: 25,
     backgroundColor: "#8FB299",
-    padding: 15
+    height: 50,
+    width: 50
+  },
+  whiteText: {
+    color: "#fff"
   },
   circleText: {
-    color: "#fff"
+    fontSize: 16,
+    margin: "auto"
+  },
+  grayText: {
+    color: "#655252"
+  },
+  fadedBackground: {
+    backgroundColor: "#B2A1A1"
   }
 });
 
@@ -54,14 +65,26 @@ export const WorkoutCard: React.FC<Props> = ({
       <View style={styles.bottomRow}>
         {sets.map((set, index) => {
           if (set === "x") {
-            return <Text key={set + index}>x</Text>;
+            return (
+              <View
+                style={[styles.circle, styles.fadedBackground]}
+                key={set + index}
+              >
+                <Text style={[styles.grayText, styles.circleText]}>X</Text>
+              </View>
+            );
           }
           if (set === "") {
-            return <Text key={set + index} />;
+            return (
+              <View
+                style={[styles.circle, styles.fadedBackground]}
+                key={set + index}
+              />
+            );
           }
           return (
             <View style={styles.circle} key={set + index}>
-              <Text style={styles.circleText}>{set}</Text>
+              <Text style={[styles.whiteText, styles.circleText]}>{set}</Text>
             </View>
           );
         })}
