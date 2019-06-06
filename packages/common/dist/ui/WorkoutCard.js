@@ -7,6 +7,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var mobx_react_lite_1 = require("mobx-react-lite");
 var React = __importStar(require("react"));
 var react_native_1 = require("react-native");
 var styles = react_native_1.StyleSheet.create({
@@ -17,7 +18,9 @@ var styles = react_native_1.StyleSheet.create({
         shadowOffset: { width: 2, height: 2 },
         shadowOpacity: 0.3,
         shadowRadius: 3,
-        flexDirection: "column"
+        flexDirection: "column",
+        padding: 10,
+        marginBottom: 10
     },
     topRow: {
         flexDirection: "row",
@@ -52,8 +55,8 @@ var styles = react_native_1.StyleSheet.create({
         backgroundColor: "#B2A1A1"
     }
 });
-exports.WorkoutCard = function (_a) {
-    var sets = _a.sets, excercise = _a.excercise, repsAndWeight = _a.repsAndWeight;
+exports.WorkoutCard = mobx_react_lite_1.observer(function (_a) {
+    var sets = _a.sets, excercise = _a.excercise, repsAndWeight = _a.repsAndWeight, onSetPress = _a.onSetPress;
     return (React.createElement(react_native_1.View, { style: styles.card },
         React.createElement(react_native_1.View, { style: styles.topRow },
             React.createElement(react_native_1.Text, { style: styles.topRowText }, excercise),
@@ -64,9 +67,9 @@ exports.WorkoutCard = function (_a) {
                     React.createElement(react_native_1.Text, { style: [styles.grayText, styles.circleText] }, "X")));
             }
             if (set === "") {
-                return (React.createElement(react_native_1.View, { style: [styles.circle, styles.fadedBackground], key: set + index }));
+                return (React.createElement(react_native_1.TouchableOpacity, { onPress: function () { return onSetPress(index); }, style: [styles.circle, styles.fadedBackground], key: set + index }));
             }
-            return (React.createElement(react_native_1.View, { style: styles.circle, key: set + index },
+            return (React.createElement(react_native_1.TouchableOpacity, { onPress: function () { return onSetPress(index); }, style: styles.circle, key: set + index },
                 React.createElement(react_native_1.Text, { style: [styles.whiteText, styles.circleText] }, set)));
         }))));
-};
+});

@@ -3,13 +3,15 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { RootStoreContext } from "../stores/rootStore";
 import { WorkoutCard } from "../ui/WorkoutCard";
+import { WorkoutTimer } from "../ui/WorkoutTimer";
 
 interface Props {}
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: "#fafafa",
-    margin: 10
+    padding: 10
   }
 });
 
@@ -20,6 +22,21 @@ export const CurrentWorkout: React.FC<Props> = observer(() => {
       {rootStore.workoutStore.currentExcercises.map(e => {
         return (
           <WorkoutCard
+            onSetPress={setIndex => {
+              const v = e.sets[setIndex];
+
+              let newValue: string;
+
+              if (v === "") {
+                newValue = `${e.reps}`;
+              } else if (v === "0") {
+                newValue = "";
+              } else {
+                newValue = `${parseInt(v) - 1}`;
+              }
+
+              e.sets[setIndex] = newValue;
+            }}
             key={e.excercise}
             sets={e.sets}
             excercise={e.excercise}
@@ -27,6 +44,7 @@ export const CurrentWorkout: React.FC<Props> = observer(() => {
           />
         );
       })}
+      <WorkoutTimer onXPress={() => {}} />
     </View>
   );
 });
