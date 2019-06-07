@@ -22,15 +22,22 @@ var styles = react_native_1.StyleSheet.create({
 });
 exports.CurrentWorkout = mobx_react_lite_1.observer(function () {
     var rootStore = React.useContext(rootStore_1.RootStoreContext);
+    React.useEffect(function () {
+        return function () {
+            rootStore.workoutTimerStore.stopTimer();
+        };
+    }, []);
     return (React.createElement(react_native_1.View, { style: styles.container },
         rootStore.workoutStore.currentExcercises.map(function (e) {
             return (React.createElement(WorkoutCard_1.WorkoutCard, { onSetPress: function (setIndex) {
+                    rootStore.workoutTimerStore.startTimer();
                     var v = e.sets[setIndex];
                     var newValue;
                     if (v === "") {
                         newValue = "" + e.reps;
                     }
                     else if (v === "0") {
+                        rootStore.workoutTimerStore.stopTimer();
                         newValue = "";
                     }
                     else {
@@ -39,5 +46,5 @@ exports.CurrentWorkout = mobx_react_lite_1.observer(function () {
                     e.sets[setIndex] = newValue;
                 }, key: e.excercise, sets: e.sets, excercise: e.excercise, repsAndWeight: e.numSets + "x" + e.reps + " " + e.weight }));
         }),
-        React.createElement(WorkoutTimer_1.WorkoutTimer, { onXPress: function () { } })));
+        rootStore.workoutTimerStore.isRunning ? (React.createElement(WorkoutTimer_1.WorkoutTimer, { percent: rootStore.workoutTimerStore.percent, currentTime: rootStore.workoutTimerStore.display, onXPress: function () { return rootStore.workoutTimerStore.stopTimer(); } })) : null));
 });
