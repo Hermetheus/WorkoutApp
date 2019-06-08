@@ -1,4 +1,5 @@
 import { observable } from "mobx";
+import { persist } from "mobx-persist";
 import { RootStore } from "./rootStore";
 
 type WorkoutDay = "a" | "b";
@@ -34,15 +35,15 @@ export class WorkoutStore {
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;
   }
-  @observable currentSquat: number;
-  @observable currentBench: number;
-  @observable currentOverheadPress: number;
-  @observable currentDeadlift: number;
-  @observable currentBarbellRow: number;
+  @persist @observable currentSquat: number;
+  @persist @observable currentBench: number;
+  @persist @observable currentOverheadPress: number;
+  @persist @observable currentDeadlift: number;
+  @persist @observable currentBarbellRow: number;
 
-  @observable lastWorkoutType: WorkoutDay;
+  @persist @observable lastWorkoutType: WorkoutDay;
 
-  @observable currentExcercises: CurrentExcercise[] = [];
+  @persist("list") @observable currentExcercises: CurrentExcercise[] = [];
 
-  @observable history: WorkoutHistory;
+  @persist("list") @observable history: WorkoutHistory;
 }
