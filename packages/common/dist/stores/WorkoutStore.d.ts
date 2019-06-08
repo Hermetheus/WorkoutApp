@@ -1,17 +1,14 @@
 import { RootStore } from "./rootStore";
 declare type WorkoutDay = "a" | "b";
-interface WorkoutHistory {
-    [key: string]: Array<{
-        excercise: string;
-        value: number;
-    }>;
-}
-interface CurrentExcercise {
+export interface CurrentExcercise {
     weight: number;
     reps: number;
     numSets: number;
     excercise: string;
     sets: string[];
+}
+interface WorkoutHistory {
+    [key: string]: CurrentExcercise[];
 }
 export declare class WorkoutStore {
     rootStore: RootStore;

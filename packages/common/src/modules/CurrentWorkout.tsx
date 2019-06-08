@@ -1,63 +1,102 @@
+import dayjs from "dayjs";
 import { observer } from "mobx-react-lite";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { Button, ScrollView, StyleSheet, View } from "react-native";
+import { RouteComponentProps } from "react-router";
 import { RootStoreContext } from "../stores/rootStore";
 import { WorkoutCard } from "../ui/WorkoutCard";
 import { WorkoutTimer } from "../ui/WorkoutTimer";
 
-interface Props {}
+interface Props
+  extends RouteComponentProps<{
+    year?: string;
+    month?: string;
+    day?: string;
+  }> {}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fafafa",
     padding: 10
+  },
+  scrollContainer: {
+    padding: 10,
+    marginBottom: 50
   }
 });
 
-export const CurrentWorkout: React.FC<Props> = observer(() => {
-  const rootStore = React.useContext(RootStoreContext);
-  React.useEffect(() => {
-    return () => {
-      rootStore.workoutTimerStore.stopTimer();
-    };
-  }, []);
-  return (
-    <View style={styles.container}>
-      {rootStore.workoutStore.currentExcercises.map(e => {
-        return (
-          <WorkoutCard
-            onSetPress={setIndex => {
-              rootStore.workoutTimerStore.startTimer();
-              const v = e.sets[setIndex];
+export const CurrentWorkout: React.FC<Props> = observer(
+  ({
+    history,
+    match: {
+      params: { day, month, year }
+    }
+  }) => {
+    const rootStore = React.useContext(RootStoreContext);
+    React.useEffect(() => {
+      return () => {
+        rootStore.workoutTimerStore.stopTimer();
+      };
+    }, []);
 
-              let newValue: string;
+    const isCurrentWorkout = !year && !month && !day;
+    const dateKey = `${year}-${month}-${day}`;
+    return (
+      <View style={styles.container}>
+        <ScrollView
+          keyboardShouldPersistTaps="always"
+          contentContainerStyle={styles.scrollContainer}
+        >
+          {isCurrentWorkout
+            ? rootStore.workoutStore.currentExcercises
+            : rootStore.workoutStore.history[dateKey].map(e => {
+                return (
+                  <WorkoutCard
+                    onSetPress={setIndex => {
+                      rootStore.workoutTimerStore.startTimer();
+                      const v = e.sets[setIndex];
 
-              if (v === "") {
-                newValue = `${e.reps}`;
-              } else if (v === "0") {
-                rootStore.workoutTimerStore.stopTimer();
-                newValue = "";
-              } else {
-                newValue = `${parseInt(v) - 1}`;
+                      let newValue: string;
+
+                      if (v === "") {
+                        newValue = `${e.reps}`;
+                      } else if (v === "0") {
+                        rootStore.workoutTimerStore.stopTimer();
+                        newValue = "";
+                      } else {
+                        newValue = `${parseInt(v) - 1}`;
+                      }
+
+                      e.sets[setIndex] = newValue;
+                    }}
+                    key={e.excercise}
+                    sets={e.sets}
+                    excercise={e.excercise}
+                    repsAndWeight={`${e.numSets}x${e.reps} ${e.weight}`}
+                  />
+                );
+              })}
+          <Button
+            title="SAVE"
+            onPress={() => {
+              if (isCurrentWorkout) {
+              rootStore.workoutStore.history[dayjs().format("YYYY-MM-DD")] =
+                rootStore.workoutStore.currentExcercises;
+              rootStore.workoutStore.currentExcercises = [];
               }
-
-              e.sets[setIndex] = newValue;
+              history.push("/");
             }}
-            key={e.excercise}
-            sets={e.sets}
-            excercise={e.excercise}
-            repsAndWeight={`${e.numSets}x${e.reps} ${e.weight}`}
           />
-        );
-      })}
-      {rootStore.workoutTimerStore.isRunning ? (
-        <WorkoutTimer
-          percent={rootStore.workoutTimerStore.percent}
-          currentTime={rootStore.workoutTimerStore.display}
-          onXPress={() => rootStore.workoutTimerStore.stopTimer()}
-        />
-      ) : null}
-    </View>
-  );
-});
+        </ScrollView>
+        {rootStore.workoutTimerStore.isRunning ? (
+          <WorkoutTimer
+            percent={rootStore.workoutTimerStore.percent}
+            currentTime={rootStore.workoutTimerStore.display}
+            onXPress={() => rootStore.workoutTimerStore.stopTimer()}
+          />
+        ) : null}
+      </View>
+    );
+  }
+);
