@@ -1,8 +1,8 @@
 import * as React from "react";
-import { CurrentExcercise } from "../stores/WorkoutStore";
+import { CurrentExercise } from "../stores/WorkoutStore";
 interface Props {
     header: string;
-    currentExercises: CurrentExcercise[];
+    currentExercises: CurrentExercise[];
     onPress: () => void;
 }
 export declare const HistoryCard: React.FC<Props>;

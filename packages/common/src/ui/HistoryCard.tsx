@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Text } from "react-native";
-import { CurrentExcercise } from "../stores/WorkoutStore";
+import { CurrentExercise } from "../stores/WorkoutStore";
 import { Card } from "./Card";
 
 interface Props {
   header: string;
-  currentExercises: CurrentExcercise[];
+  currentExercises: CurrentExercise[];
   onPress: () => void;
 }
 
@@ -27,9 +27,9 @@ export const HistoryCard: React.FC<Props> = ({
       <Text>{header}</Text>
       {currentExercises.map(ce => {
         return (
-          <Text key={ce.excercise}>
+          <Text key={ce.exercise}>
             {`${
-              exerciseShortName[ce.excercise as keyof typeof exerciseShortName]
+              exerciseShortName[ce.exercise as keyof typeof exerciseShortName]
             } ${ce.numSets}x${ce.reps} ${ce.weight}`}
           </Text>
         );

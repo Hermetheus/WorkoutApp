@@ -49,7 +49,7 @@ export const CurrentWorkout: React.FC<Props> = observer(
           contentContainerStyle={styles.scrollContainer}
         >
           {isCurrentWorkout
-            ? rootStore.workoutStore.currentExcercises
+            ? rootStore.workoutStore.currentExercises
             : rootStore.workoutStore.history[dateKey].map(e => {
                 return (
                   <WorkoutCard
@@ -70,9 +70,9 @@ export const CurrentWorkout: React.FC<Props> = observer(
 
                       e.sets[setIndex] = newValue;
                     }}
-                    key={e.excercise}
+                    key={e.exercise}
                     sets={e.sets}
-                    excercise={e.excercise}
+                    exercise={e.exercise}
                     repsAndWeight={`${e.numSets}x${e.reps} ${e.weight}`}
                   />
                 );
@@ -81,9 +81,9 @@ export const CurrentWorkout: React.FC<Props> = observer(
             title="SAVE"
             onPress={() => {
               if (isCurrentWorkout) {
-              rootStore.workoutStore.history[dayjs().format("YYYY-MM-DD")] =
-                rootStore.workoutStore.currentExcercises;
-              rootStore.workoutStore.currentExcercises = [];
+                rootStore.workoutStore.history[dayjs().format("YYYY-MM-DD")] =
+                  rootStore.workoutStore.currentExercises;
+                rootStore.workoutStore.currentExercises = [];
               }
               history.push("/");
             }}

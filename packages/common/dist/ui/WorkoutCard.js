@@ -49,11 +49,11 @@ var styles = react_native_1.StyleSheet.create({
     }
 });
 exports.WorkoutCard = mobx_react_lite_1.observer(function (_a) {
-    var sets = _a.sets, excercise = _a.excercise, repsAndWeight = _a.repsAndWeight, onSetPress = _a.onSetPress;
+    var sets = _a.sets, exercise = _a.exercise, repsAndWeight = _a.repsAndWeight, onSetPress = _a.onSetPress;
     return (React.createElement(react_native_1.View, { style: styles.cardContainer },
         React.createElement(Card_1.Card, null,
             React.createElement(react_native_1.View, { style: styles.topRow },
-                React.createElement(react_native_1.Text, { style: styles.topRowText }, excercise),
+                React.createElement(react_native_1.Text, { style: styles.topRowText }, exercise),
                 React.createElement(react_native_1.Text, { style: styles.topRowText }, repsAndWeight)),
             React.createElement(react_native_1.View, { style: styles.bottomRow }, sets.map(function (set, index) {
                 if (set === "x") {

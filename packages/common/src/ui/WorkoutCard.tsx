@@ -4,7 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Card } from "./Card";
 
 interface Props {
-  excercise: string;
+  exercise: string;
   repsAndWeight: string;
   sets: string[];
   onSetPress: (index: number) => void;
@@ -49,12 +49,12 @@ const styles = StyleSheet.create({
 });
 
 export const WorkoutCard: React.FC<Props> = observer(
-  ({ sets, excercise, repsAndWeight, onSetPress }) => {
+  ({ sets, exercise, repsAndWeight, onSetPress }) => {
     return (
       <View style={styles.cardContainer}>
         <Card>
           <View style={styles.topRow}>
-            <Text style={styles.topRowText}>{excercise}</Text>
+            <Text style={styles.topRowText}>{exercise}</Text>
             <Text style={styles.topRowText}>{repsAndWeight}</Text>
           </View>
           <View style={styles.bottomRow}>
