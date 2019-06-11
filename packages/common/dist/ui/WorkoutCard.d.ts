@@ -1,6 +1,6 @@
 import * as React from "react";
 interface Props {
-    exercise: string;
+    excercise: string;
     repsAndWeight: string;
     sets: string[];
     onSetPress: (index: number) => void;

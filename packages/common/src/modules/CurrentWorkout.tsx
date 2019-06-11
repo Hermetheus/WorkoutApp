@@ -17,8 +17,7 @@ interface Props
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fafafa",
-    padding: 10
+    backgroundColor: "#fafafa"
   },
   scrollContainer: {
     padding: 10,
@@ -42,41 +41,43 @@ export const CurrentWorkout: React.FC<Props> = observer(
 
     const isCurrentWorkout = !year && !month && !day;
     const dateKey = `${year}-${month}-${day}`;
+
     return (
       <View style={styles.container}>
         <ScrollView
           keyboardShouldPersistTaps="always"
           contentContainerStyle={styles.scrollContainer}
         >
-          {isCurrentWorkout
+          {(isCurrentWorkout
             ? rootStore.workoutStore.currentExercises
-            : rootStore.workoutStore.history[dateKey].map(e => {
-                return (
-                  <WorkoutCard
-                    onSetPress={setIndex => {
-                      rootStore.workoutTimerStore.startTimer();
-                      const v = e.sets[setIndex];
+            : rootStore.workoutStore.history[dateKey]
+          ).map(e => {
+            return (
+              <WorkoutCard
+                onSetPress={setIndex => {
+                  rootStore.workoutTimerStore.startTimer();
+                  const v = e.sets[setIndex];
 
-                      let newValue: string;
+                  let newValue: string;
 
-                      if (v === "") {
-                        newValue = `${e.reps}`;
-                      } else if (v === "0") {
-                        rootStore.workoutTimerStore.stopTimer();
-                        newValue = "";
-                      } else {
-                        newValue = `${parseInt(v) - 1}`;
-                      }
+                  if (v === "") {
+                    newValue = `${e.reps}`;
+                  } else if (v === "0") {
+                    rootStore.workoutTimerStore.stopTimer();
+                    newValue = "";
+                  } else {
+                    newValue = `${parseInt(v) - 1}`;
+                  }
 
-                      e.sets[setIndex] = newValue;
-                    }}
-                    key={e.exercise}
-                    sets={e.sets}
-                    exercise={e.exercise}
-                    repsAndWeight={`${e.numSets}x${e.reps} ${e.weight}`}
-                  />
-                );
-              })}
+                  e.sets[setIndex] = newValue;
+                }}
+                key={e.exercise}
+                sets={e.sets}
+                excercise={e.exercise}
+                repsAndWeight={`${e.numSets}x${e.reps} ${e.weight}`}
+              />
+            );
+          })}
           <Button
             title="SAVE"
             onPress={() => {

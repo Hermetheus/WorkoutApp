@@ -4,7 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Card } from "./Card";
 
 interface Props {
-  exercise: string;
+  excercise: string;
   repsAndWeight: string;
   sets: string[];
   onSetPress: (index: number) => void;
@@ -16,8 +16,7 @@ const styles = StyleSheet.create({
   },
   topRow: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 10
+    justifyContent: "space-between"
   },
   topRowText: {
     fontSize: 16
@@ -28,10 +27,10 @@ const styles = StyleSheet.create({
     marginTop: 14
   },
   circle: {
-    borderRadius: 25,
-    backgroundColor: "#8FB299",
     height: 50,
-    width: 50
+    width: 50,
+    borderRadius: 25,
+    backgroundColor: "#8FB299"
   },
   whiteText: {
     color: "#fff"
@@ -49,12 +48,12 @@ const styles = StyleSheet.create({
 });
 
 export const WorkoutCard: React.FC<Props> = observer(
-  ({ sets, exercise, repsAndWeight, onSetPress }) => {
+  ({ excercise, repsAndWeight, sets, onSetPress }) => {
     return (
       <View style={styles.cardContainer}>
         <Card>
           <View style={styles.topRow}>
-            <Text style={styles.topRowText}>{exercise}</Text>
+            <Text style={styles.topRowText}>{excercise}</Text>
             <Text style={styles.topRowText}>{repsAndWeight}</Text>
           </View>
           <View style={styles.bottomRow}>
@@ -69,6 +68,7 @@ export const WorkoutCard: React.FC<Props> = observer(
                   </View>
                 );
               }
+
               if (set === "") {
                 return (
                   <TouchableOpacity
@@ -78,6 +78,7 @@ export const WorkoutCard: React.FC<Props> = observer(
                   />
                 );
               }
+
               return (
                 <TouchableOpacity
                   onPress={() => onSetPress(index)}

@@ -20,8 +20,7 @@ var WorkoutTimer_1 = require("../ui/WorkoutTimer");
 var styles = react_native_1.StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#fafafa",
-        padding: 10
+        backgroundColor: "#fafafa"
     },
     scrollContainer: {
         padding: 10,
@@ -40,26 +39,26 @@ exports.CurrentWorkout = mobx_react_lite_1.observer(function (_a) {
     var dateKey = year + "-" + month + "-" + day;
     return (React.createElement(react_native_1.View, { style: styles.container },
         React.createElement(react_native_1.ScrollView, { keyboardShouldPersistTaps: "always", contentContainerStyle: styles.scrollContainer },
-            isCurrentWorkout
+            (isCurrentWorkout
                 ? rootStore.workoutStore.currentExercises
-                : rootStore.workoutStore.history[dateKey].map(function (e) {
-                    return (React.createElement(WorkoutCard_1.WorkoutCard, { onSetPress: function (setIndex) {
-                            rootStore.workoutTimerStore.startTimer();
-                            var v = e.sets[setIndex];
-                            var newValue;
-                            if (v === "") {
-                                newValue = "" + e.reps;
-                            }
-                            else if (v === "0") {
-                                rootStore.workoutTimerStore.stopTimer();
-                                newValue = "";
-                            }
-                            else {
-                                newValue = "" + (parseInt(v) - 1);
-                            }
-                            e.sets[setIndex] = newValue;
-                        }, key: e.exercise, sets: e.sets, exercise: e.exercise, repsAndWeight: e.numSets + "x" + e.reps + " " + e.weight }));
-                }),
+                : rootStore.workoutStore.history[dateKey]).map(function (e) {
+                return (React.createElement(WorkoutCard_1.WorkoutCard, { onSetPress: function (setIndex) {
+                        rootStore.workoutTimerStore.startTimer();
+                        var v = e.sets[setIndex];
+                        var newValue;
+                        if (v === "") {
+                            newValue = "" + e.reps;
+                        }
+                        else if (v === "0") {
+                            rootStore.workoutTimerStore.stopTimer();
+                            newValue = "";
+                        }
+                        else {
+                            newValue = "" + (parseInt(v) - 1);
+                        }
+                        e.sets[setIndex] = newValue;
+                    }, key: e.exercise, sets: e.sets, excercise: e.exercise, repsAndWeight: e.numSets + "x" + e.reps + " " + e.weight }));
+            }),
             React.createElement(react_native_1.Button, { title: "SAVE", onPress: function () {
                     if (isCurrentWorkout) {
                         rootStore.workoutStore.history[dayjs_1.default().format("YYYY-MM-DD")] =
